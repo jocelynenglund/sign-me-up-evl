@@ -1,0 +1,562 @@
+{
+  "app": "Sign me up",
+  "idea": "Sign-up sheets with a limited number of spots: a pottery class, a carpool, the crayfish party table. Someone makes a sheet, people put their name down, and when it's full they join a waitlist. Cancel and the first person waiting moves up.",
+  "round": 1,
+  "chapters": [
+    {
+      "name": "Sheets"
+    },
+    {
+      "name": "Signing up"
+    }
+  ],
+  "events": [
+    {
+      "name": "SheetCreated",
+      "fields": [
+        "sheetId",
+        "title",
+        "startsAt",
+        "spots",
+        "createdAt"
+      ]
+    },
+    {
+      "name": "SignedUp",
+      "fields": [
+        "sheetId",
+        "personId",
+        "name",
+        "at"
+      ]
+    },
+    {
+      "name": "JoinedWaitlist",
+      "fields": [
+        "sheetId",
+        "personId",
+        "name",
+        "at"
+      ]
+    },
+    {
+      "name": "SignUpCancelled",
+      "fields": [
+        "sheetId",
+        "personId",
+        "at"
+      ]
+    },
+    {
+      "name": "MovedOffWaitlist",
+      "fields": [
+        "sheetId",
+        "personId",
+        "at"
+      ]
+    }
+  ],
+  "slices": [
+    {
+      "id": "create-sheet",
+      "name": "CreateSheet",
+      "type": "command",
+      "chapter": "Sheets",
+      "fields": [
+        "sheetId",
+        "title",
+        "startsAt",
+        "spots",
+        "createdAt"
+      ],
+      "produces": [
+        "SheetCreated"
+      ],
+      "refined": false,
+      "scenarios": [
+        {
+          "id": "create-sheet-1",
+          "title": "Creates a sheet: Saturday pottery, 6 spots",
+          "given": [],
+          "when": "CreateSheet",
+          "then": {
+            "events": [
+              {
+                "type": "SheetCreated"
+              }
+            ]
+          }
+        },
+        {
+          "id": "create-sheet-2",
+          "title": "Refuses a sheet without a title",
+          "given": [],
+          "when": "CreateSheet",
+          "then": {
+            "rejected": "Give the sheet a title"
+          }
+        },
+        {
+          "id": "create-sheet-3",
+          "title": "Refuses zero spots",
+          "given": [],
+          "when": "CreateSheet",
+          "then": {
+            "rejected": "A sheet needs at least 1 spot"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sheet-list",
+      "name": "SheetList",
+      "type": "view",
+      "chapter": "Sheets",
+      "fields": [
+        "sheetId",
+        "title",
+        "startsAt",
+        "spotsLeft"
+      ],
+      "reads": [
+        "SheetCreated",
+        "SignedUp",
+        "SignUpCancelled",
+        "MovedOffWaitlist"
+      ],
+      "refined": false,
+      "scenarios": [
+        {
+          "id": "sheet-list-1",
+          "title": "Shows no sheets yet",
+          "given": [],
+          "when": "SheetList",
+          "then": {
+            "view": "SheetList",
+            "value": "No sheets yet"
+          }
+        },
+        {
+          "id": "sheet-list-2",
+          "title": "Shows each sheet with its spots left",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            }
+          ],
+          "when": "SheetList",
+          "then": {
+            "view": "SheetList",
+            "value": "Saturday pottery, 5 of 6 left · Carpool to Ikea, 3 of 3 left"
+          }
+        },
+        {
+          "id": "sheet-list-3",
+          "title": "Shows a full sheet as full",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            }
+          ],
+          "when": "SheetList",
+          "then": {
+            "view": "SheetList",
+            "value": "Dinner for one, full"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sign-up",
+      "name": "SignUp",
+      "type": "command",
+      "chapter": "Signing up",
+      "fields": [
+        "sheetId",
+        "personId",
+        "name",
+        "at"
+      ],
+      "produces": [
+        "SignedUp",
+        "JoinedWaitlist"
+      ],
+      "refined": false,
+      "scenarios": [
+        {
+          "id": "sign-up-1",
+          "title": "Signs Ana up for a sheet with spots left",
+          "given": [
+            {
+              "type": "SheetCreated"
+            }
+          ],
+          "when": "SignUp",
+          "then": {
+            "events": [
+              {
+                "type": "SignedUp"
+              }
+            ]
+          }
+        },
+        {
+          "id": "sign-up-2",
+          "title": "Puts Ben on the waitlist when the sheet is full",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            }
+          ],
+          "when": "SignUp",
+          "then": {
+            "events": [
+              {
+                "type": "JoinedWaitlist"
+              }
+            ]
+          }
+        },
+        {
+          "id": "sign-up-3",
+          "title": "Refuses a sheet that doesn't exist",
+          "given": [],
+          "when": "SignUp",
+          "then": {
+            "rejected": "That sheet doesn't exist"
+          }
+        },
+        {
+          "id": "sign-up-4",
+          "title": "Refuses a sign-up without a name",
+          "given": [
+            {
+              "type": "SheetCreated"
+            }
+          ],
+          "when": "SignUp",
+          "then": {
+            "rejected": "Write your name"
+          }
+        },
+        {
+          "id": "sign-up-5",
+          "title": "Refuses Ana twice",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            }
+          ],
+          "when": "SignUp",
+          "then": {
+            "rejected": "You're already signed up"
+          }
+        },
+        {
+          "id": "sign-up-6",
+          "title": "Refuses Ben twice on the waitlist",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            },
+            {
+              "type": "JoinedWaitlist"
+            }
+          ],
+          "when": "SignUp",
+          "then": {
+            "rejected": "You're already on the waitlist"
+          }
+        },
+        {
+          "id": "sign-up-7",
+          "title": "Signs Ana up again after she cancelled",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            },
+            {
+              "type": "SignUpCancelled"
+            }
+          ],
+          "when": "SignUp",
+          "then": {
+            "events": [
+              {
+                "type": "SignedUp"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cancel-sign-up",
+      "name": "CancelSignUp",
+      "type": "command",
+      "chapter": "Signing up",
+      "fields": [
+        "sheetId",
+        "personId",
+        "at"
+      ],
+      "produces": [
+        "SignUpCancelled",
+        "MovedOffWaitlist"
+      ],
+      "refined": false,
+      "scenarios": [
+        {
+          "id": "cancel-sign-up-1",
+          "title": "Cancels Ana's spot",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            }
+          ],
+          "when": "CancelSignUp",
+          "then": {
+            "events": [
+              {
+                "type": "SignUpCancelled"
+              }
+            ]
+          }
+        },
+        {
+          "id": "cancel-sign-up-2",
+          "title": "Moves Ben, first on the waitlist, into Ana's spot",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            },
+            {
+              "type": "JoinedWaitlist"
+            },
+            {
+              "type": "JoinedWaitlist"
+            }
+          ],
+          "when": "CancelSignUp",
+          "then": {
+            "events": [
+              {
+                "type": "SignUpCancelled"
+              },
+              {
+                "type": "MovedOffWaitlist"
+              }
+            ]
+          }
+        },
+        {
+          "id": "cancel-sign-up-3",
+          "title": "Takes Ben off the waitlist without moving anyone",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            },
+            {
+              "type": "JoinedWaitlist"
+            }
+          ],
+          "when": "CancelSignUp",
+          "then": {
+            "events": [
+              {
+                "type": "SignUpCancelled"
+              }
+            ]
+          }
+        },
+        {
+          "id": "cancel-sign-up-4",
+          "title": "Refuses someone who isn't signed up",
+          "given": [
+            {
+              "type": "SheetCreated"
+            }
+          ],
+          "when": "CancelSignUp",
+          "then": {
+            "rejected": "You're not signed up for this"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sheet",
+      "name": "Sheet",
+      "type": "view",
+      "chapter": "Signing up",
+      "fields": [
+        "sheetId",
+        "title",
+        "startsAt",
+        "spots",
+        "spotsLeft",
+        "people",
+        "waitlist"
+      ],
+      "reads": [
+        "SheetCreated",
+        "SignedUp",
+        "JoinedWaitlist",
+        "SignUpCancelled",
+        "MovedOffWaitlist"
+      ],
+      "refined": false,
+      "scenarios": [
+        {
+          "id": "sheet-1",
+          "title": "Shows a new sheet with every spot free",
+          "given": [
+            {
+              "type": "SheetCreated"
+            }
+          ],
+          "when": "Sheet",
+          "then": {
+            "view": "Sheet",
+            "value": "Saturday pottery, 6 of 6 spots left, nobody yet"
+          }
+        },
+        {
+          "id": "sheet-2",
+          "title": "Shows who's signed up, in the order they signed",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            },
+            {
+              "type": "SignedUp"
+            }
+          ],
+          "when": "Sheet",
+          "then": {
+            "view": "Sheet",
+            "value": "4 of 6 left: Ana, Cleo"
+          }
+        },
+        {
+          "id": "sheet-3",
+          "title": "Shows the waitlist in order when full",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            },
+            {
+              "type": "JoinedWaitlist"
+            },
+            {
+              "type": "JoinedWaitlist"
+            }
+          ],
+          "when": "Sheet",
+          "then": {
+            "view": "Sheet",
+            "value": "Full: Ana · waiting: 1. Ben, 2. Dev"
+          }
+        },
+        {
+          "id": "sheet-4",
+          "title": "Shows Ben moved up after Ana cancels",
+          "given": [
+            {
+              "type": "SheetCreated"
+            },
+            {
+              "type": "SignedUp"
+            },
+            {
+              "type": "JoinedWaitlist"
+            },
+            {
+              "type": "SignUpCancelled"
+            },
+            {
+              "type": "MovedOffWaitlist"
+            }
+          ],
+          "when": "Sheet",
+          "then": {
+            "view": "Sheet",
+            "value": "Full: Ben · nobody waiting"
+          }
+        }
+      ]
+    }
+  ],
+  "comments": [
+    {
+      "id": "c-1",
+      "sliceId": "sign-up",
+      "author": "ai",
+      "text": "When the sheet is full, signing up puts you on the waitlist instead of refusing you, so one button does both. Would you rather people choose to join the waitlist?",
+      "at": "2026-11-04 06:10"
+    },
+    {
+      "id": "c-2",
+      "sliceId": "cancel-sign-up",
+      "author": "ai",
+      "text": "When someone with a spot cancels, the first person waiting moves up straight away, with no 'do you still want it?' step. OK for a first version?",
+      "at": "2026-11-04 06:10"
+    },
+    {
+      "id": "c-3",
+      "sliceId": "sign-up",
+      "author": "ai",
+      "text": "A person is one name on one device for now: no accounts or logins. Sign-ups only live in this browser too, so two people can't race for the last spot yet. Sharing a sheet with others (and that race) is round 2.",
+      "at": "2026-11-04 06:10"
+    },
+    {
+      "id": "c-4",
+      "sliceId": "create-sheet",
+      "author": "ai",
+      "text": "No closing time and no editing a sheet in this round, to keep it small. Ask for them if you want them now.",
+      "at": "2026-11-04 06:10"
+    },
+    {
+      "id": "c-5",
+      "author": "ai",
+      "text": "EVL build: same plan as sign-me-up-eve, built as vertical slices over a table store (rows, not events). Refine in sign-me-up-eve's book; this copy is synced from it before building.",
+      "at": "2026-11-04 06:10"
+    }
+  ]
+}

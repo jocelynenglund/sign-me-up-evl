@@ -1,0 +1,55 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<!-- The share image (site/share/share.png, 1200x627; the site's og:image). Re-render after editing:
+     google-chrome --headless=new --hide-scrollbars --window-size=1200,627 --virtual-time-budget=5000 --screenshot=site/share/share.png "file://$PWD/site/share/share.html" -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* itsyBIT studio look, like the Event Book */
+:root{--paper:#f3efe8;--surface:#fbf8f3;--ink:#26211d;--muted:#6b6158;--line:#ddd3c5;--accent:#b23f3a;--event:#e0873a;--command:#3f76db;--view:#37965f;
+--display:"Space Grotesk",sans-serif;--body:"Space Grotesk",sans-serif;--serif:"Instrument Serif",Georgia,serif;--mono:"IBM Plex Mono",monospace}
+*{box-sizing:border-box}html,body{margin:0}
+body{width:1200px;height:627px;background:var(--paper);color:var(--ink);font-family:var(--body);overflow:hidden;position:relative}
+.wrap{display:grid;grid-template-columns:600px 1fr;gap:40px;height:100%;padding:58px 64px 52px}
+.left{display:flex;flex-direction:column}
+.brand{display:flex;gap:14px;align-items:center;font:700 30px var(--display)}
+.mark{width:49px;height:42px;display:block}
+h1{font:400 italic 92px/0.95 var(--serif);letter-spacing:-.01em;margin:34px 0 0}
+h1 span{display:block;font:700 70px/1.1 var(--display);font-style:normal;letter-spacing:-.03em;color:var(--accent);margin-top:4px}
+.eve{margin-top:30px;display:grid;gap:8px;font-size:26px;font-weight:500}
+.eve div{display:flex;gap:14px;align-items:center}
+.eve b{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:9px;color:#fff;font:700 22px var(--display)}
+.url{margin-top:auto;font:500 19px var(--mono);color:var(--muted)}
+.right{display:flex;flex-direction:column;justify-content:center;gap:16px}
+.row{display:flex;align-items:center;gap:10px}.down{position:absolute;left:968px;top:225px;color:var(--muted);font-size:22px}
+.sticky{width:150px;height:96px;border-radius:8px;padding:12px;color:#fff;font:600 17px/1.25 var(--body);box-shadow:0 10px 24px -14px rgba(0,0,0,.5);display:flex;flex-direction:column;justify-content:space-between}
+.sticky small{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.c{background:var(--command)}.e{background:var(--event)}.v{background:var(--view)}
+.arrow{color:var(--muted);font-size:22px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;font:500 16px/1.7 var(--mono)}
+.card .k{color:var(--muted);display:inline-block;width:62px}
+.pass{display:flex;align-items:center;gap:10px;font:600 18px var(--body);color:var(--view)}
+.pass i{width:24px;height:24px;border-radius:50%;background:var(--view);color:#fff;display:grid;place-items:center;font-style:normal;font-size:15px}
+</style></head><body><div class="wrap">
+<div class="left">
+  <div class="brand"><svg class="mark" viewBox="0 0 140 120" aria-hidden="true"><rect x="5" y="5" width="90" height="110" rx="16" fill="#9B2335"/><circle cx="50" cy="42" r="22" fill="none" stroke="#fff" stroke-width="8"/><line x1="30" y1="92" x2="70" y2="92" stroke="#fff" stroke-width="8" stroke-linecap="round"/><circle cx="121" cy="27" r="11" fill="#3f76db"/><circle cx="121" cy="60" r="11" fill="#e0873a"/><circle cx="121" cy="93" r="11" fill="#37965f"/></svg>ItsyBIT EVE Template</div>
+  <h1>Vibe code<br><span>responsibly.</span></h1>
+  <div class="eve">
+    <div><b style="background:var(--command)">E</b>Event Modeling</div>
+    <div><b style="background:var(--view)">V</b>Vertical Slices</div>
+    <div><b style="background:var(--event)">E</b>Event Sourcing</div>
+  </div>
+  <div class="url"><div style="font:500 20px var(--body);color:var(--ink);margin-bottom:6px">Make it work, then make it beautiful.</div>jocelynenglund.github.io/itsybit-eve-template</div>
+</div>
+<div class="right">
+  <div class="row">
+    <div class="sticky c"><small>Command</small>Check off habit</div><span class="arrow">→</span>
+    <div class="sticky e"><small>Event</small>Habit checked</div>
+  </div>
+  <div class="row" style="padding-left:182px"><span class="arrow" style="width:0;position:relative;left:-4px"></span><div class="sticky v"><small>View</small>My streaks</div></div>
+  <div class="card">
+    <div><span class="k">Given</span>nothing yet</div>
+    <div><span class="k">When</span>Check off habit</div>
+    <div><span class="k">Then</span>Habit checked</div>
+  </div>
+  <div class="pass"><i>✓</i>Every planned scenario passes</div>
+</div>
+</div></body></html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ItsyBIT EVE Template</title>
+<meta name="description" content="Vibe code responsibly with EVE: Event Modeling, Vertical Slices and Event Sourcing. Plan your app with your AI in an Event Book, then it builds it test first.">
+<meta name="theme-color" content="#161412">
+<link rel="icon" href="eve/logo.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jocelynenglund.github.io/itsybit-eve-template/">
+<meta property="og:title" content="ItsyBIT EVE Template: vibe code responsibly">
+<meta property="og:description" content="Event Modeling, Vertical Slices and Event Sourcing. Plan your app with your AI in an Event Book, then it builds it test first.">
+<meta property="og:image" content="https://jocelynenglund.github.io/itsybit-eve-template/site/share/share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="ItsyBIT EVE Template: Vibe code responsibly. Event Modeling, Vertical Slices, Event Sourcing.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* itsyBIT studio, as on itsybit.se: night paper, Instrument Serif italics for what people say, coral accent.
+     Layout: one reading column; mono kickers head each section; the loop is a ruled list; the Event Book card shows the real thing. */
+  --paper:#161412; --surface:#1e1b19; --ink:#e6ddd0; --bright:#efe7da; --muted:#9a9087; --faint:#7a7067; --line:#2b2724; --line2:#3a3531;
+  --accent:#d0605a; --command:#7fb0d8; --event:#e39a5c; --view:#7fb58f; --pass:#8fc49f; --refuse:#e08a7a;
+  --display:"Instrument Serif",Georgia,serif; --body:"Space Grotesk","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+code,pre{font-family:var(--mono)}
+
+nav{border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;padding-bottom:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand img{height:26px;width:auto;flex:none}
+.word{font:700 19px var(--mono);color:#f1ebe2}
+.word em{font-style:normal;color:var(--accent)}
+.crumb{font:500 14px var(--mono);color:var(--faint);white-space:nowrap}
+.beta{font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);border-radius:999px;padding:3px 7px;flex:none}
+.chip b{color:var(--accent);font-weight:600}
+.navlink{font-size:14px;color:#c9bfb2;text-decoration:none}
+.navlink:hover{color:var(--bright)}
+
+.hero{padding:56px 0 40px;display:grid;gap:22px}
+.chip{justify-self:start;font:400 12px var(--mono);color:#8d837a;border:1px solid #2f2b27;background:#1d1a18;border-radius:999px;padding:6px 14px}
+h1{margin:0;font:400 italic clamp(52px,11vw,84px)/.98 var(--display);color:var(--bright);letter-spacing:-.01em;text-wrap:balance}
+h1 .punch{display:block;font:700 clamp(38px,8vw,58px)/1.1 var(--body);font-style:normal;color:var(--accent);letter-spacing:-.02em;margin-top:6px}
+.lede{margin:0;max-width:52ch;font-size:18px;line-height:1.6;color:#c9bfb2}
+.eve{display:flex;flex-wrap:wrap;gap:6px 22px;font:500 15px var(--body);color:#c9bfb2}
+.eve b{font-weight:700}
+.c1{color:var(--command)} .c2{color:var(--event)} .c3{color:var(--view)}
+.ctas{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-block;background:var(--accent);color:#1a1210;font-weight:600;border-radius:10px;padding:13px 22px;font-size:15px;text-decoration:none}
+.btn:hover{background:#dc716b}
+.ghost{display:inline-block;border:1px solid var(--line2);color:var(--ink);border-radius:10px;padding:13px 22px;font-size:15px;text-decoration:none}
+.ghost:hover{border-color:var(--faint)}
+
+section{padding:16px 0 28px;display:grid;gap:14px}
+.kick{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0}
+p{margin:0;max-width:62ch}
+.steps{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.n{font:500 13px var(--mono);color:var(--accent);padding-top:4px;font-variant-numeric:tabular-nums}
+.say{display:block;font:400 italic 24px/1.2 var(--display);color:var(--bright)}
+.then{display:block;font-size:15px;color:var(--muted);margin-top:4px}
+
+pre{background:var(--surface);border:1px solid #2f2b27;border-radius:12px;padding:16px 18px;margin:0;overflow-x:auto;font-size:14px;line-height:1.7;color:#c9bfb2}
+pre b{color:var(--accent);font-weight:600}
+pre .p{color:var(--faint)}
+.note{color:var(--muted);font-size:15px}
+.note a,.lede a{color:var(--bright);text-decoration-color:var(--accent);text-underline-offset:3px}
+q{font:400 italic 1.1em var(--display);color:var(--bright);quotes:"“" "”"}
+
+.book{background:var(--surface);border:1px solid #2f2b27;border-radius:12px;padding:16px 18px;display:grid;gap:12px}
+.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.row>div{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.tag{font:600 11px var(--mono);letter-spacing:.08em;padding:4px 7px;border-radius:5px;background:#22313d;color:#9cc4e4}
+.name{font:600 16px var(--mono);color:var(--bright)}
+.arrow{color:var(--faint)}
+.ev{font:500 13px var(--mono);color:#f0b37c;background:#3a2a1d;border-radius:5px;padding:3px 7px;white-space:nowrap}
+.built{font:600 11px var(--mono);color:var(--pass);border:1px solid #3d5a45;border-radius:5px;padding:4px 7px}
+.ref{font-size:13px;font-weight:600;color:var(--pass);border:1px solid #3d5a45;border-radius:7px;padding:4px 10px}
+.sc{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:8px}
+.sct{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:var(--bright)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--view);flex:none}
+.gwt{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:14px;color:#c9bfb2;align-items:center}
+.gwt .k{font:600 11px var(--mono);letter-spacing:.08em;color:var(--faint)}
+.no{color:var(--refuse);font-weight:600}
+
+.chat{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.chat li{display:grid;gap:6px;border-left:2px solid var(--accent);padding-left:16px}
+.chat .you{font:500 11px var(--mono);letter-spacing:.14em;color:var(--accent)}
+.chat .msg{font:400 italic 21px/1.35 var(--display);color:var(--bright)}
+.chat .then{margin:0}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.card{display:grid;gap:4px;background:var(--surface);border:1px solid #2f2b27;border-radius:12px;padding:16px;text-decoration:none}
+.card:hover{border-color:var(--accent)}
+.card strong{color:var(--bright);font-weight:600}
+.card span{color:var(--muted);font-size:14px}
+
+footer{border-top:1px solid var(--line);margin-top:20px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;padding-top:20px;padding-bottom:60px;color:var(--faint);font:400 13px var(--mono)}
+footer em{font:400 italic 20px var(--display);color:var(--ink)}
+footer .credit{flex-basis:100%;max-width:none;font:400 13px var(--body);color:var(--muted)}
+footer .credit a{color:var(--ink);text-decoration-color:var(--accent);text-underline-offset:3px}
+@media (max-width:520px){ .crumb{display:none} .steps li{grid-template-columns:32px 1fr} }
+@media (prefers-reduced-motion:no-preference){ .btn,.ghost,.card{transition:border-color .15s,background .15s} }
+</style>
+<link rel="stylesheet" href="site/whats-new/slice.css">
+<script src="site/whats-new/whats-new.js" defer></script>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="./"><img src="eve/logo.svg" alt="" width="30" height="26"><span class="word">itsy<em>BIT</em></span><span class="crumb">/ EVE Template</span><span class="beta">beta</span></a>
+  <a class="navlink" href="https://github.com/jocelynenglund/itsybit-eve-template">GitHub</a>
+</div></nav>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="chip">● an itsyBIT template · <b>beta</b></span>
+    <h1>Vibe code<br>responsibly<span class="punch">with EVE.</span></h1>
+    <p class="lede">Plan your app with your AI in an Event Book you can comment on. Then it builds it slice by slice, tests first. You watch every scenario turn green.</p>
+    <div class="eve"><span><b class="c1">E</b>vent Modeling</span><span><b class="c3">V</b>ertical Slices</span><span><b class="c2">E</b>vent Sourcing</span></div>
+    <div class="ctas">
+      <a class="btn" href="https://github.com/jocelynenglund/itsybit-eve-template/generate">↓ Get the template</a>
+      <a class="ghost" href="eve/book.html?root=../sample/todo/">See the sample →</a>
+    </div>
+  </header>
+
+  <section aria-labelledby="how">
+    <h2 class="kick" id="how">How it goes</h2>
+    <ol class="steps">
+      <li><span class="n">01</span><div><span class="say">let's plan a storage-box tracker</span><span class="then">The AI writes the plan and opens the Event Book. Comment on anything, add the examples you're missing, tick Refined when a slice is right, then press Done with feedback.</span></div></li>
+      <li><span class="n">02</span><div><span class="say">done with feedback</span><span class="then">Every comment answered, the next round served. Repeat until every slice is refined.</span></div></li>
+      <li><span class="n">03</span><div><span class="say">start building</span><span class="then">Each slice built test-first; the book turns green as the tests pass. Then open the app in your browser.</span></div></li>
+      <li><span class="n">04</span><div><span class="say">make it beautiful</span><span class="then">Your plan becomes a design brief for your design tool, and the app gets the look you pick. Every test still has to pass.</span></div></li>
+      <li><span class="n">05</span><div><span class="say">update EVE</span><span class="then">Newer tools from this template. Your plan and your app are never touched.</span></div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="book">
+    <h2 class="kick" id="book">The Event Book</h2>
+    <div class="book" role="img" aria-label="A slice in the Event Book: the command AddBox produces BoxAdded, built and refined, with two scenarios that pass.">
+      <div class="row">
+        <div><span class="tag">COMMAND</span><span class="name">AddBox</span><span class="arrow">→</span><span class="ev">BoxAdded</span></div>
+        <div><span class="built">BUILT</span><span class="ref">✓ Refined</span></div>
+      </div>
+      <div class="sc"><span class="sct"><i class="dot"></i>Adds a box</span>
+        <div class="gwt"><span class="k">GIVEN</span><span>nothing</span><span class="k">WHEN</span><span>AddBox</span><span class="k">THEN</span><span><span class="ev">BoxAdded</span></span></div></div>
+      <div class="sc"><span class="sct"><i class="dot"></i>Refuses a name another box already has</span>
+        <div class="gwt"><span class="k">GIVEN</span><span><span class="ev">BoxAdded</span></span><span class="k">WHEN</span><span>AddBox</span><span class="k">THEN</span><span class="no">refused: “You already have a box with that name”</span></div></div>
+    </div>
+    <p class="note">Every thing your app can do is a slice, with Given / When / Then examples you agree on before any code. Each example becomes a test; the dot turns green when it passes.</p>
+  </section>
+
+  <section aria-labelledby="start">
+    <h2 class="kick" id="start">Start</h2>
+    <p class="note">On <a href="https://github.com/jocelynenglund/itsybit-eve-template">GitHub</a>, press <strong>Use this template</strong> to make your own copy (it can be private). Then:</p>
+<pre>git clone https://github.com/<b>you</b>/my-app
+cd my-app
+claude            <span class="p"># or Cursor, Codex, any assistant that reads AGENTS.md</span>
+<span class="p">&gt;</span> let's plan a todo app</pre>
+    <p class="note">You need <a href="https://nodejs.org">Node</a> 18 or newer; there's nothing to install. When EVE gets better, your Event Book says so: tell your AI <q>update EVE</q>.</p>
+  </section>
+
+  <section aria-labelledby="real">
+    <h2 class="kick" id="real">A real session</h2>
+    <p class="note">A storage-box tracker, built in an afternoon. These are the messages the person typed, word for word:</p>
+    <ol class="chat">
+      <li><span class="you">YOU</span><span class="msg">let's plan an app to track my boxes that i put into storage. I basically want to be able to make a qr code for my boxes that are linked to a list of things that are in it. so it makes knowing what's in the boxes easier.</span><p class="then">The AI writes the plan and opens the Event Book. They comment, add scenarios, tick Refined, and press Done with feedback.</p></li>
+      <li><span class="you">YOU</span><span class="msg">done with feedback</span><p class="then">Every comment answered, the next round served. Repeat until every slice is refined.</p></li>
+      <li><span class="you">YOU</span><span class="msg">start building</span><p class="then">Each slice built test-first; the book turns green as the tests pass. The app opens in the browser.</p></li>
+      <li><span class="you">YOU</span><span class="msg">I want to add a feature that shows me a view of which boxes i have taken things out of most often so i can maybe reorganize better.</span><p class="then">New slices join the plan. The built ones fold away in the book so the new ones stand out. Refine, then build again.</p></li>
+      <li><span class="you">YOU</span><span class="msg">make it beautiful</span><p class="then">The plan becomes a design brief for their design tool, and the app gets the new look. Every test still passes.</p></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="see">
+    <h2 class="kick" id="see">See a finished one</h2>
+    <div class="cards">
+      <a class="card" href="eve/book.html?root=../sample/todo/"><strong>The sample's Event Book</strong><span>A todo app after three rounds of feedback. Every slice refined and built.</span></a>
+      <a class="card" href="sample/todo/app/"><strong>The sample app</strong><span>The todo app the plan turned into. It keeps its events in your browser.</span></a>
+      <a class="card" href="https://github.com/jocelynenglund/itsybit-eve-template"><strong>The repo</strong><span>AGENTS.md, the skills, the Event Book and the sample's code.</span></a>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><em>Make it work, then make it beautiful.</em><span>ItsyBIT EVE Template · MIT</span><p class="credit">Event Modeling is Adam Dymitruk's method: <a href="https://eventmodeling.org/about/">eventmodeling.org</a></p></div></footer>
+</body>
+</html>
